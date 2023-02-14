@@ -18,7 +18,7 @@
                         <p>ISBN:{{book.ISBN}}</p>
                         <p style="text-align: left;">简介：{{book.abs}}</p>
                         <p>价格：{{book.price}}</p>
-                        <el-button type="primary" plain style="margin-top: 10px;" >加入购物车</el-button>
+                        <el-button type="primary" plain style="margin-top: 10px;"  @click="addIntoCart()">加入购物车</el-button>
                     </div>
                 </el-main>
             </el-container>
@@ -50,7 +50,9 @@ export default {
              }
     },
     methods:{
-
+      addIntoCart(){
+        store.commit('addIntoCart',this.book);
+      }
     },
   created() {
       this.book= store.state.book;

@@ -27,7 +27,7 @@
 						</el-table-column>
 						<el-table-column label="操作" min-width="10%" align="center">
 							<template slot-scope="scope">
-								<el-button size="small" @click="del(scope.$index)">删除</el-button>
+								<el-button size="small" @click="del(scope.row.bid)">删除</el-button>
 							</template>
 						</el-table-column>
 				</el-table>

@@ -137,6 +137,9 @@ export default new Vuex.Store({
           state.orders[i].state='已支付但未发货';
         }
       }
+    },
+    addIntoCart(state,book){
+      state.book.push(book);
     }
   }
 })
