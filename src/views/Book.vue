@@ -6,6 +6,8 @@
         <el-main>
             <MyNav></MyNav>
             <div>
+              <h1>热销书</h1>
+              <h2>新进书</h2>
                 <el-row style="height: 840px;margin-top:30px;">
                   <el-tooltip effect="dark" placement="right"
                               v-for="item in books"
@@ -22,8 +24,8 @@
                         <img :src="item.cover" alt="封面">
                       </div>
                       <div class="info">
-                        <div class="title">
-                            <router-link to="/bookdetail">{{item.title}}</router-link>
+                        <div class="title" @click="toDetail(item)">
+                            {{item.title}}
                         </div>
                       </div>
                       <div class="author">{{item.author}}</div>
@@ -44,6 +46,8 @@
 
 <script>
 import MyNav from "../components/MyNav";
+import router from "../router";
+import store from "../store";
 
 export default {
     name:'Book',
@@ -77,11 +81,37 @@ export default {
                     price: '30',
                     abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
                 }
-            ]
+            ],bookSaledGood:[{
+
+          }],bookRecent: [{
+
+          }]
         }
     },
     methods:{
-
+      toDetail(item){
+        //传入被点击的书籍的数据
+       console.log(item)
+        store.commit('setBook',item)
+        this.$router.push({
+            name:'bookhome.jsp',
+            query:{ISBN:item.ISBN}
+        })
+      }
+    },
+    created() {
+      //获取销量好的书籍
+      var url=this.$baseUrl+'/book/getBooksBySales';
+      this.$axios.get(url).then(res => {
+        this.bookSaledGood=res.data;
+          store.commit('setBookSaledGood',res.data);
+      })
+      //获取新进书籍
+      var url1=this.$baseUrl+'/book/getBooksByDate';
+      this.$axios.get(url1).then(res => {
+        this.bookRecent=res.data;
+        store.commit('setBookRecent',res.data);
+      })
     }
 }
 </script>

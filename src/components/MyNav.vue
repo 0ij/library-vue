@@ -3,7 +3,7 @@
     <el-menu-item index="1" @click="search">搜索书本</el-menu-item>
     <el-menu-item index="2" @click="book">全部书籍</el-menu-item>
     <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
-    <el-menu-item index="4" @click="shopping">历史订单</el-menu-item>
+    <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
     <el-menu-item index="5" @click="help">帮助</el-menu-item>
     <el-menu-item index="6" @click="home">退出登录</el-menu-item>
   </el-menu>
@@ -37,6 +37,9 @@ export default {
     },
     home(){
       this.$router.push('/welcome');
+    },
+    orders(){
+      this.$router.push('/orders');
     }
   }
 }

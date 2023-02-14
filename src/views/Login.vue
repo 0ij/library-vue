@@ -3,7 +3,7 @@
     <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-container" label-position="left">
       <h3 class="login-title">登录在线图书馆</h3>
       <el-form-item label="账户" prop="username">
-        <el-input v-model="loginForm.username" type="text"></el-input>
+        <el-input v-model="loginForm.email" type="text"></el-input>
       </el-form-item>
       <el-form-item  label="密码" prop="password" >
         <el-input type="password" v-model="loginForm.password"></el-input>
@@ -29,7 +29,7 @@ export default {
       // 表单信息
       loginForm: {
         // 账户数据
-        username: '',
+        email: '',
         // 密码数据
         password: '',
         // 验证码数据
@@ -37,7 +37,7 @@ export default {
       // 表单验证
       rules: {
         // 设置账户效验规则
-        username: [
+        email: [
           {required: true, message: '请输入账户', trigger: 'blur'},
           {min: 1, max: 30, message: '请输入正确的账号名', trigger: 'blur'}
         ],
@@ -53,7 +53,7 @@ export default {
     login(formName) {
       var url=this.$baseUrl+'user/login';
       let formdata=new FormData();
-      formdata.append("username",this.loginForm.username);
+      formdata.append("email",this.loginForm.email);
       formdata.append("password",this.loginForm.password);
       let config = {
         headers: {
@@ -61,17 +61,16 @@ export default {
         }
       }
       this.$axios.post(url, {
-        mail:this.loginForm.username,
+        mail:this.loginForm.email,
         password:this.loginForm.password
       }).then(res => {
-        console.log(res.uname);
-        // 拿到结果
-        //let result = JSON.parse(res.data.data);
+        //console.log(res.uname);
         let message = res.data.msg;
         // 判断结果
         if (message==='true')                        {
           /*登陆成功*/
           alert("登陆成功");
+          store.commit('login',res.data);
           router.push("/welcome")
         }else{
           /*打印错误信息*/
@@ -83,6 +82,7 @@ export default {
    toRegister(){
      router.push("/register")
    },
+    //忘记密码
     forgetPassword() {
       this.$alert('发送用户名到管理员邮箱xxxxx@163.com找回密码', '忘记密码？', {
         confirmButtonText: '确定',
@@ -94,9 +94,9 @@ export default {
         }
       });
       //传数据
-      var url=this.$baseUrl+'/getPasswordByUid';
+      var url=this.$baseUrl+'user/mailPassword';
       let formdata=new FormData();
-      formdata.append("username",this.loginForm.username);
+      formdata.append("username",this.loginForm.email);
       formdata.append("password",this.loginForm.password);
       let config = {
         headers: {
@@ -104,7 +104,7 @@ export default {
         }
       }
       this.$axios.post(url, {
-        mail:this.loginForm.username,
+        mail:this.loginForm.email,
         password:this.loginForm.password
       }).then(res => {
         console.log(res.uname);
@@ -113,14 +113,28 @@ export default {
         let message = res.data.msg;
         // 判断结果
         if (message==='true')                        {
-          alert("密码为"+message.password+",建议您前往个人中心修改密码");
+          alert("密码为"+message.password+",建议您修改密码");
           router.push("/shopping")
         }else{
           /*打印错误信息*/
           alert("账号或密码错误");
         }}
       )
+    },
+    //修改密码
+    changePassword(){
+      var url=this.$baseUrl+'user/changePassword';
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.$axios.post(url, {
+        mail:this.loginForm.email,
+        password:this.loginForm.password
+      }).then(res => {
 
+      })
     }
   }
 }

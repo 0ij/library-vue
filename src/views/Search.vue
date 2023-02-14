@@ -40,15 +40,15 @@ export default {
         if(this.searchForm.author===''&&this.searchForm.bname===''&&this.searchForm.ISBN===''){
           alert("搜索关键词不能全为空！")
         }else{
-          console.log(this.searchForm)
-          this.$axios.post('/url',{
+          var url=this.$baseUrl+'/book/search';
+         // console.log(this.searchForm)
+          this.$axios.post(url,{
             bname:this.searchForm.bname,
             author:this.searchForm.author,
             ISBN:this.searchForm.ISBN
           }).then(res=>{
             console.log(res.data);
-            let result=res.data.books;
-            store.commit("getSearchResult",{result});
+            store.commit("getSearchResult",res.data.books);
             router.push("/searchBook")
           },err=>{
             console.log(err);

@@ -23,7 +23,7 @@
                       </div>
                       <div class="info">
                         <div class="title">
-                            <router-link to="/bookdetail">{{item.bname}}</router-link>
+                            {{item.bname}}
                         </div>
                       </div>
                       <div class="author">{{item.author}}</div>
@@ -84,31 +84,14 @@ export default {
     methods:{
         detail(item){
           console.log(item)
-            //显示详情信息，传递所点击的书本的信息，传ISBN
-          // var url=this.$baseUrl+'/getBooksByISBN';
-          // this.$axios.get(url,{
-          //   params: {
-          //     ISBN:item.ISBN
-          //   }
-          // }).then(res=>{
-          //   store.commit('setBook',item)
-          //   console.log(res.data);
-          // },err=>{
-          //   console.log(err);
-          // })
           store.state.book=item;
-          let ISBN=item.ISBN;
-          // var url='/bookhome.jsp?ISBN='+item.ISBN;
-          // this.$router.push(url);
           this.$router.push({
-            path: '/bookhome.jsp',
-            query:{
-              ISBN
-            }
+            name:'bookhome.jsp',
+            query:{ISBN:item.ISBN}
           })
         }
     },
-  created() {
+  mounted() {
     this.books=store.state.searchBookResult;
   }
 }

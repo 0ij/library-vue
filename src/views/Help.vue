@@ -32,6 +32,15 @@ export default {
     MyNav
   },
     methods:{
+        faq(){
+            this.$router.push('/faq');
+        },
+        rule(){
+            this.$router.push('/rule');
+        },
+        contact(){
+            this.$router.push('/contact');
+        }
 
     }
 }

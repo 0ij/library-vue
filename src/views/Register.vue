@@ -77,7 +77,7 @@ export default {
     methods:{
         register(){
           console.log("注册")
-          var url=this.$baseUrl+'/register';
+          var url=this.$baseUrl+'/user/register';
           let formdata=new FormData();
           formdata.append("email",this.registerForm.email);
           formdata.append("username",this.registerForm.username);
@@ -87,18 +87,22 @@ export default {
               'Content-Type': 'multipart/form-data'
             }
           }
-          this.$axios.post(url, formdata,config).then(res => {
+          this.$axios.post(url, {
+            mail:this.registerForm.email,
+            username:this.registerForm.username,
+            password:this.registerForm.password
+          }).then(res => {
             // 拿到结果
             //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
             // 判断结果，是否存在重复等由后端验证
-            if (message==='true')                        {
+            if (message==='注册成功！')                        {
               /*注册成功*/
               alert("注册成功");
               router.push("/shopping")
             }else{
               /*打印错误信息*/
-              alert("账号或密码错误");
+              alert("该邮箱已经注册过，请登录\"或\"注册成功！");
             }}
           )
 
