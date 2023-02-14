@@ -41,6 +41,7 @@
 
 <script>
 import MyNav from "../components/MyNav";
+import store from "../store";
 
 export default {
     name:'Shopping',
@@ -55,11 +56,20 @@ export default {
                     price:'30',
                     num:1
                 }
-            ]
+            ],
+          //购物车
+          cart:[
+
+          ]
         }
     },
     methods:{
-
+      load(){
+        this.cart=store.state.cart;
+      }
+    },
+    mounted() {
+     this.load();
     }
 }
 </script>

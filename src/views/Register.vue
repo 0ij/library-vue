@@ -46,7 +46,7 @@ export default {
                   if (
                     /^\w{1,64}@[a-z0-9\-]{1,256}(\.[a-z]{2,6}){1,2}$/i.test(
                       value
-                    ) == false
+                    ) === false
                   ) {
                     callback(new Error("邮箱格式错误"));
                   } else {
@@ -93,7 +93,6 @@ export default {
             password:this.registerForm.password
           }).then(res => {
             // 拿到结果
-            //let result = JSON.parse(res.data.data);
             let message = res.data.msg;
             // 判断结果，是否存在重复等由后端验证
             if (message==='注册成功！')                        {

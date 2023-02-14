@@ -29,6 +29,7 @@
 <script>
 import MyNav from "../components/MyNav";
 import store from "../store";
+import router from "../router";
 
 
 export default {
@@ -39,19 +40,65 @@ export default {
     data(){
         return{
           book:{
-            pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
-            ISBN:'12121',
-            bname: 'bookdetail三体',
-            author: '刘慈欣',
-            price: '30',
-            abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
-
+          },
+          order:{
           }
-             }
+        }
     },
     methods:{
+      //加入购物车，生成订单及填入数据等未完成，生成订单时判断是否登录
+      //if(state.user.uid)===''  通过判断state中是否存在用户信息来完成
+      //加入购物车
       addIntoCart(){
         store.commit('addIntoCart',this.book);
+      },
+      //生成订单后发送给后端
+      makeOrder(){
+        var time = new Date();
+        //生成关于订单的表单数据
+        let formdata=new FormData();
+        //此时订单号为空
+        formdata.append("oid",'');
+        formdata.append("orderTime",time.toLocaleString());
+        formdata.append("state",'0');
+        formdata.append("uid",store.state.user.uid);
+        formdata.append("bid",this.book.bid);
+        //此处传入的数据界面中还没有，传入书本的数量
+        formdata.append("bnumber",number);
+        //传入总价，数量乘单价
+        formdata.append("totalPrice",(number*this.book.price).toString());
+
+        var url=this.$baseUrl+'/ord/addOrd';
+        // console.log(this.searchForm)
+        this.$axios.post(url,{
+          oid:formdata.oid,
+          orderTime:formdata.orderTime,
+          state:formdata.state,
+          uid:formdata.uid,
+          bid:formdata.bid,
+          bnumber:formdata.bnumber,
+          totalPrice:formdata.totalPrice
+        }).then(res=>{
+          let message = res.data.msg;
+          if (message==='success'){
+            alert('订单生成成功！')
+            //新生成的订单加入订单界面，获取信息，获取所有订单！
+            var url=this.$baseUrl+'/ord/getOrds';
+            this.$axios.get(url,{
+              params: {
+                uid:store.state.user.id
+              }
+            }).then(res=>{
+              let message = res.data.msg;
+              if (message==='success'){
+                store.commit('setOrders',res.data);
+              }
+            })
+          }else{
+            /*打印错误信息*/
+            alert("生成订单失败");
+          }
+        })
       }
     },
   created() {

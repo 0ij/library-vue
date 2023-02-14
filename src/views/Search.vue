@@ -36,7 +36,7 @@ export default {
         }
     },
     methods:{
-      onSearch(searchForm){
+      onSearch(){
         if(this.searchForm.author===''&&this.searchForm.bname===''&&this.searchForm.ISBN===''){
           alert("搜索关键词不能全为空！")
         }else{

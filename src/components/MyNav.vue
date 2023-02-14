@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   name: "MyNav",
   date(){},
@@ -39,7 +41,11 @@ export default {
       this.$router.push('/welcome');
     },
     orders(){
-      this.$router.push('/orders');
+      if(store.state.user.uid===''){
+        alert('未登录用户不可查看订单界面')
+      }else{
+        this.$router.push('/orders');
+      }
     }
   }
 }

@@ -81,14 +81,35 @@ export default {
                     price: '30',
                     abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
                 }
-            ],bookSaledGood:[{
+            ],
+          //存放销量好的书籍
+          bookSaledGood:[{
 
-          }],bookRecent: [{
+          }],
+          //存放新进书籍
+          bookRecent: [{
 
           }]
         }
     },
     methods:{
+      //加载页面中的基础数据
+      load(){
+        //获取销量好的书籍
+        var url=this.$baseUrl+'/book/getBooksBySales';
+        this.$axios.get(url).then(res => {
+          this.bookSaledGood=res.data;
+          store.commit('setBookSaledGood',res.data);
+        })
+        //获取新进书籍
+        var url1=this.$baseUrl+'/book/getBooksByDate';
+        this.$axios.get(url1).then(res => {
+          this.bookRecent=res.data;
+          store.commit('setBookRecent',res.data);
+        })
+        //以上传递的两个都是包含所有书籍的数据
+
+      },
       toDetail(item){
         //传入被点击的书籍的数据
        console.log(item)
@@ -100,18 +121,7 @@ export default {
       }
     },
     created() {
-      //获取销量好的书籍
-      var url=this.$baseUrl+'/book/getBooksBySales';
-      this.$axios.get(url).then(res => {
-        this.bookSaledGood=res.data;
-          store.commit('setBookSaledGood',res.data);
-      })
-      //获取新进书籍
-      var url1=this.$baseUrl+'/book/getBooksByDate';
-      this.$axios.get(url1).then(res => {
-        this.bookRecent=res.data;
-        store.commit('setBookRecent',res.data);
-      })
+      this.load();
     }
 }
 </script>
