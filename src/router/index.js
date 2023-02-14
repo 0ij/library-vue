@@ -77,8 +77,8 @@ export default new Router({
     {
       path:'/bookhome.jsp',
       name:'BookDetail',
-      component:BookDetail
-      //component:()=>import('@/views/Orders')
+      //component:BookDetail
+      component:()=>import('@/views/SearchBook')
     },
     {
       path:'/searchbook',

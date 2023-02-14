@@ -3,7 +3,7 @@
     <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-container" label-position="left">
       <h3 class="login-title">注册在线图书馆账号</h3>
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="registerForm.username" type="text"></el-input>
+        <el-input v-model="registerForm.email" type="text"></el-input>
       </el-form-item>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="registerForm.username" type="text"></el-input>
@@ -29,7 +29,7 @@ export default {
         return{
           registerForm:{
             email:'',
-            name:'',
+            username:'',
             password:''
           },
           // 表单验证
@@ -76,11 +76,12 @@ export default {
     },
     methods:{
         register(){
-          var url=this.$baseUrl+'/UserLogin';
+          console.log("注册")
+          var url=this.$baseUrl+'/register';
           let formdata=new FormData();
-          formdata.append("email",this.loginForm.email);
-          formdata.append("username",this.loginForm.username);
-          formdata.append("password",this.loginForm.password);
+          formdata.append("email",this.registerForm.email);
+          formdata.append("username",this.registerForm.username);
+          formdata.append("password",this.registerForm.password);
           let config = {
             headers: {
               'Content-Type': 'multipart/form-data'

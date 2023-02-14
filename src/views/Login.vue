@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     login(formName) {
-      var url=this.$baseUrl+'/login';
+      var url=this.$baseUrl+'user/login';
       let formdata=new FormData();
       formdata.append("username",this.loginForm.username);
       formdata.append("password",this.loginForm.password);
@@ -60,7 +60,11 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post(url, formdata,config).then(res => {
+      this.$axios.post(url, {
+        mail:this.loginForm.username,
+        password:this.loginForm.password
+      }).then(res => {
+        console.log(res.uname);
         // 拿到结果
         //let result = JSON.parse(res.data.data);
         let message = res.data.msg;
@@ -74,37 +78,7 @@ export default {
           alert("账号或密码错误");
         }}
       )
-      //验证函数无法使用
-      // this.$refs.formName.validate((valid) => {
-      //   console.log("111")
-      //   if(valid){
-      //     let formdata=new FormData();
-      //     formdata.append("username",this.loginForm.username);
-      //     formdata.append("password",this.loginForm.password);
-      //     let config = {
-      //       headers: {
-      //         'Content-Type': 'multipart/form-data'
-      //       }
-      //     }
-      //     this.$axios.post(url, formdata,config).then(res => {
-      //       // 拿到结果
-      //       //let result = JSON.parse(res.data.data);
-      //       let message = res.data.msg;
-      //       let service=res.data.service;
-      //       // 判断结果
-      //       if (message==='true')                        {
-      //         /*登陆成功*/
-      //         alert("登陆成功");
-      //         /*获取用户信息*/
-      //         this.getData(service);
-      //         router.push("/welcome")
-      //       }else{
-      //         /*打印错误信息*/
-      //         alert("账号或密码错误");
-      //       }}
-      //       )
-      //   }
-      // });
+
     },
    toRegister(){
      router.push("/register")
@@ -129,13 +103,16 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      this.$axios.post(url, formdata,config).then(res => {
+      this.$axios.post(url, {
+        mail:this.loginForm.username,
+        password:this.loginForm.password
+      }).then(res => {
+        console.log(res.uname);
         // 拿到结果
         //let result = JSON.parse(res.data.data);
         let message = res.data.msg;
         // 判断结果
-        if (message==='true')           {
-          /*登陆成功*/
+        if (message==='true')                        {
           alert("密码为"+message.password+",建议您前往个人中心修改密码");
           router.push("/shopping")
         }else{
@@ -143,6 +120,7 @@ export default {
           alert("账号或密码错误");
         }}
       )
+
     }
   }
 }

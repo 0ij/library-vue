@@ -48,13 +48,13 @@ export default new Vuex.Store({
 
     },
     order:[{
-      oid:'',
-      orderTime:'',
-      state:'',
-      uid:'',
-      bid:'',
-      bnumber:'',
-      totalPrice:''
+      oid:'store1',
+      orderTime:'2021-10-19',
+      state:'1',
+      uid:'12',
+      bid:'3',
+      bnumber:'34',
+      totalPrice:'333'
     }],
     cart:[{
       oid:'',

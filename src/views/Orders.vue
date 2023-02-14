@@ -1,22 +1,29 @@
 <template>
   <body>
   <MyNav></MyNav>
-  <el-table :data="orders"  stripe style="width: 100%; cursor: pointer;border-radius: 25px; " :show-header='false' >
-    <el-table-column  label="订单" >
-      <template slot-scope="scope" >
-        <div @click="moreInfo(scope.row)" >
-          <img :src="scope.row.img[0]" style="margin-top: 8px;border-radius: 8px;width:450px;height:260px"></img>
-          <span class="span" style="text-align: center; position:absolute; margin-top: 35px;margin-left: 50px;font-size: 30px;font-family: SimSun;font-weight: bold"  >{{scope.row.bid}}</span>
-          <span class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 120px;font-size: 20px "  >{{scope.row.type}}</span>
-          <span v-if="scope.row.joint=='true'" class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 350px;font-size: 20px " >合租</span>
-          <span v-if="scope.row.joint=='false'" class="span1" style="text-align: center; position:absolute; margin-top: 120px;margin-left: 350px;font-size: 20px " >独租</span>
-          <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 120px;font-size: 20px "  >{{scope.row.district}}</span>
-          <span class="span1" style="text-align: center; position:absolute; margin-top: 200px;margin-left: 350px;font-size: 20px "  >{{scope.row.neighborhood}}</span>
-          <span class="span1" style="text-align: center; position:absolute; margin-top: 150px;margin-left: 600px;font-size: 45px;color: #e5121f;font-weight: bold;"  >{{scope.row.cost}}<span style="font-size: 25px;color: #e5121f;font-weight: bold; ">元/月</span></span>
-          <!--
-                      <span class="span1" style="text-align: center; position:absolute; margin-top: 154px;margin-left: 711px;font-size: 25px;color: #e5121f;font-weight: bold; "  ></span>
-          -->
-        </div>
+<!--  界面显示订单内容-->
+  <el-table
+    :data="orders"
+    style="width: 100%">
+    <el-table-column
+      prop="bid"
+      label="书名"
+      min-width="7%" align="center">
+    </el-table-column>
+    <el-table-column
+      prop="totalPrice"
+      label="价格"
+      min-width="7%" align="center">
+    </el-table-column>
+    <el-table-column
+      label="数量" min-width="5%" align="center">
+      <template slot-scope="scope">
+        <el-input min="1" type="number" v-model="scope.row.bnumber" ></el-input>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作" min-width="10%" align="center">
+      <template slot-scope="scope">
+        <el-button size="small" @click="del(scope.$index)">付款</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -26,6 +33,7 @@
 <script>
 import MyNav from "../components/MyNav";
 import store from "../store";
+import Element from "element-ui";
 export default {
   name: "order",
   components:{
