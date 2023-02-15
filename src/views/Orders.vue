@@ -95,15 +95,30 @@ export default {
 
   },methods:{
     load(){
+      console.log(store.state.user.uid);
+      let uid=Number(store.state.user.uid);
+      var url=this.$baseUrl+'/ord/getOrds';
+      this.$axios.get(url,{
+        params: {
+          uid:uid
+        }
+      }).then(res=>{
+        this.orders=res.data;
+        store.commit('setOrders',res.data)
+        console.log(res.data.message);
+      },err=>{
+        console.log(err);
+      })
       this.orders=store.state.orders;
     },
     //撤销订单
       del(oid,state){
         console.log(oid);
         if(state=='未支付'||state=='已支付未发货'){
+          var url=this.$baseUrl+'/ord/deleteOrd';
           store.commit('delOrder',oid);
           this.load();
-          this.$axios.post('/ord/deleteOrd',{
+          this.$axios.post(url,{
             oid:oid,
           }).then(response =>{
             if(response.data=="删除成功"){
@@ -111,6 +126,18 @@ export default {
                 type: 'success',
                 message: '删除成功!'
               });
+              var url=this.$baseUrl+'/ord/getOrds';
+              this.$axios.get(url,{
+                params: {
+                  uid:uid
+                }
+              }).then(res=>{
+                this.orders=res.data;
+                store.commit('setOrders',res.data)
+                console.log(res.data.message);
+              },err=>{
+                console.log(err);
+              })
             }
           });
         }else{
@@ -122,7 +149,8 @@ export default {
       if(state=='未支付'){
         store.commit('payOrder',oid);
         this.load();
-        this.$axios.post('/ord/changeOrd1',{
+        var url=this.$baseUrl+'/ord/changeOrd1';
+        this.$axios.post(url,{
           oid:oid,
         }).then(response =>{
           console.log(response.data)
@@ -171,20 +199,7 @@ export default {
     }
   },
   created() {
-    console.log(store.state.user.uid);
-    let uid=Number(store.state.user.uid);
-    var url=this.$baseUrl+'/ord/getOrds';
-    this.$axios.get(url,{
-      params: {
-        uid:uid
-      }
-    }).then(res=>{
-      this.orders=res.data;
-      store.commit('setOrders',res.data)
-      console.log(res.data.message);
-    },err=>{
-      console.log(err);
-    })
+    this.load();
   },mounted() {
     if(store.state.user.uid===''){
       this.isShow=true;

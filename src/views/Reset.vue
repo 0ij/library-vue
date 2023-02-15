@@ -3,13 +3,13 @@
   <el-form class="login-container" label-position="left">
     <h3 class="login-title">忘记密码</h3>
     <el-form-item>
-      <el-input v-model="name" placeholder="用户名" type="text"></el-input>
+      <el-input v-model="form.name" placeholder="用户名" type="text"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input v-model="password" placeholder="新密码" type="password"></el-input>
+      <el-input v-model="form.password" placeholder="新密码" type="password"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input v-model="newpassword" placeholder="确认新密码" type="password"></el-input>
+      <el-input v-model="form.newpassword" placeholder="确认新密码" type="password"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" plain @click="comfirm">确认修改</el-button>
@@ -24,7 +24,7 @@ export default {
   data(){
     return{
       form:{
-        mail:'',
+        name:'',
         password:'',
         newpassword:''
       }
@@ -44,16 +44,19 @@ export default {
           }
         }
         this.$axios.post(url, {
-          mail:this.form.email,
+          uname:this.form.name,
           password:this.form.password
         }).then(res => {
             //console.log(res.uname);
-            let message = res.data.msg;
+            let message = res.data;
             // 判断结果
-            if (message === "修改成功") {
+            if (message === "success") {
+              alert('修改成功！')
               /*修改密码成功*/
               this.$router.push("/login");
-            } else {
+            } else if(res.data === "nouser"){
+              alert('无此用户信息')
+            }else{
               /*打印错误信息*/
               alert("修改未成功");
             }

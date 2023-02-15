@@ -68,10 +68,12 @@ export default {
           //console.log(res.uname);
           let message = res.data.msg;
           // 判断结果
-          if (message == "wrong") {
+          if (message === "wrong") {
             /*打印错误信息*/
             alert("账号或密码错误");
-          } else {
+          } else if(message === "nouser") {
+            alert("无此账号信息");
+          }else{
             /*登陆成功*/
             //alert("登陆成功");
             store.commit('login', res.data);
