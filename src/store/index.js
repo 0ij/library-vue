@@ -83,6 +83,7 @@ export default new Vuex.Store({
       }],
     //当前用户的购物车
     cart:[{
+      num:'3',
       pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
       ISBN:'12121',
       bname: 'cart中的三体',
@@ -149,7 +150,11 @@ export default new Vuex.Store({
       }
     },
     addIntoCart(state,book){
-      state.book.push(book);
+      console.log(book);
+      state.cart.push(book);
+      // state.cart.push(book);
+      // let l=state.cart.length;
+      // state.cart[l-1].num=num;
     }
   }
 })

@@ -52,7 +52,19 @@ export default {
       //if(state.user.uid)===''  通过判断state中是否存在用户信息来完成
       //加入购物车
       addIntoCart(){
+        // let formdata=new FormData();
+        // console.log(this.num)
+        // formdata.append("num",this.num);
+        // formdata.append("pic",this.book.pic);
+        // formdata.append("ISBN",this.book.ISBN);
+        // formdata.append("bname",this.book.bname);
+        // formdata.append("author",this.book.author);
+        // formdata.append("price",this.book.price);
+        // formdata.append("abs",this.book.abs);
+        console.log(this.num);
+        console.log('bookdetail:'+this.book.bname);
         store.commit('addIntoCart',this.book);
+        alert('成功加入购物车');
       },
       //生成订单后发送给后端
       makeOrder(){

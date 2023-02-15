@@ -11,8 +11,8 @@
         <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
         <el-menu-item index="5" @click="help">帮助</el-menu-item>
         <el-menu-item index="6" @click="register">创建新账号</el-menu-item>
-        <el-menu-item index="7" @click="login">登录</el-menu-item>
-        <el-menu-item index="8" @click="home" >退出登录</el-menu-item>
+        <el-menu-item v-show="isShow" index="7" @click="login">登录</el-menu-item>
+        <el-menu-item v-show="isShow1" index="8" @click="home" >退出登录</el-menu-item>
       </el-menu>
       <div style="margin-top: 20px;">
         <el-table
@@ -77,6 +77,8 @@ export default {
   name:'Shopping',
   data(){
     return{
+      isShow:false,
+      isShow1:true,
       tableData:[
         {
           bname:'三体',
@@ -131,7 +133,7 @@ export default {
       this.$router.push('/contact');
     },
     home(){
-      this.$router.push('/welcome');
+      this.$router.push('/');
     },
     orders(){
       if(store.state.user.uid===''){
@@ -162,7 +164,10 @@ export default {
       this.multipleSelection = val;
     }
   },mounted() {
-    console.log("shopping"+store.state.user.uid)
+    if(store.state.user.uid===''){
+      this.isShow=true;
+      this.isShow1=false;
+    }
     this.load();
   }
 }

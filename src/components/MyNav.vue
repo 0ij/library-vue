@@ -6,8 +6,10 @@
     <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
     <el-menu-item index="5" @click="help">帮助</el-menu-item>
     <el-menu-item index="6" @click="register">创建新账号</el-menu-item>
-    <el-menu-item index="7" @click="login">登录</el-menu-item>
-    <el-menu-item index="8" @click="home" >退出登录</el-menu-item>
+    <el-menu-item v-show="isShow" index="7" @click="login">
+      登录
+    </el-menu-item>
+    <el-menu-item v-show="isShow1" index="8" @click="home" >退出登录</el-menu-item>
   </el-menu>
 </template>
 
@@ -16,7 +18,12 @@ import store from "../store";
 
 export default {
   name: "MyNav",
-  date(){},
+  date(){
+    return{
+      isShow:true,
+      isShow1:false,
+    }
+  },
   methods:{
     search(){
       this.$router.push('/search');
@@ -54,6 +61,13 @@ export default {
     },
     login(){
       this.$router.push('/login');
+    },
+    mounted() {
+      if(store.state.user.uid===''){
+        this.isShow=true;
+        this.isShow1=false;
+      }
+      this.load();
     }
   }
 }

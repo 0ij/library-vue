@@ -23,15 +23,47 @@ export default {
   name: "Reset",
   data(){
     return{
-      name:'',
-      password:'',
-      newpassword:''
+      form:{
+        mail:'',
+        password:'',
+        newpassword:''
+      }
     }
   },
   methods:{
     comfirm(){
+      ///changePassword
+      if(this.form.password===this.form.newpassword){
+        var url=this.$baseUrl+'user/changePassword';
+        let formdata=new FormData();
+        formdata.append("email",this.form.email);
+        formdata.append("password",this.form.password);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.$axios.post(url, {
+          mail:this.form.email,
+          password:this.form.password
+        }).then(res => {
+            //console.log(res.uname);
+            let message = res.data.msg;
+            // 判断结果
+            if (message === "修改成功") {
+              /*修改密码成功*/
+              this.$router.push("/login");
+            } else {
+              /*打印错误信息*/
+              alert("修改未成功");
+            }
+          }
+        )
+      }else{
+        alert('两次密码不同！')
+      }
+    },
 
-    }
   }
 }
 </script>
