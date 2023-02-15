@@ -12,7 +12,7 @@
         <el-input type="password" v-model="registerForm.password"></el-input>
       </el-form-item>
       <el-form-item  label="确认密码" prop="passwordconf" >
-        <el-input type="password" v-model="registerForm.password"></el-input>
+        <el-input type="password" v-model="registerForm.passwordconf"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" plain @click='register(registerForm)'>注册</el-button>
@@ -30,7 +30,8 @@ export default {
           registerForm:{
             email:'',
             username:'',
-            password:''
+            password:'',
+            passwordconf:''
           },
           // 表单验证
           rules: {
@@ -77,34 +78,33 @@ export default {
     methods:{
         register(){
           console.log("注册")
-          var url=this.$baseUrl+'/user/register';
-          let formdata=new FormData();
-          formdata.append("email",this.registerForm.email);
-          formdata.append("username",this.registerForm.username);
-          formdata.append("password",this.registerForm.password);
-          let config = {
-            headers: {
-              'Content-Type': 'multipart/form-data'
+          if(this.registerForm.password!=this.registerForm.passwordconf){
+            alert('两处密码不一致！')
+          }else{
+            var url=this.$baseUrl+'/user/register';
+            let config = {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
             }
-          }
-          this.$axios.post(url, {
-            mail:this.registerForm.email,
-            username:this.registerForm.username,
-            password:this.registerForm.password
-          }).then(res => {
-            // 拿到结果
-            let message = res.data.msg;
-            // 判断结果，是否存在重复等由后端验证
-            if (message==='注册成功！')                        {
-              /*注册成功*/
-              alert("注册成功");
-              router.push("/shopping")
-            }else{
-              /*打印错误信息*/
-              alert("该邮箱已经注册过，请登录\"或\"注册成功！");
-            }}
-          )
+            this.$axios.post(url, {
+              mail:this.registerForm.email,
+              uname:this.registerForm.username,
+              password:this.registerForm.password
+            }).then(res => {
+              // 拿到结果
+              let message = res.data.msg;
+              // 判断结果，是否存在重复等由后端验证
+              if (message==='该邮箱已经注册过，请登录！')                        {
+                /*打印错误信息*/
+                alert("该邮箱已经注册过，请登录！");
+              }else{
 
+                /*注册成功*/
+                alert("注册成功");
+                router.push("/shopping")
+              }})
+          }
         }
     }
 }

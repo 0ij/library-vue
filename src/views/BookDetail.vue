@@ -104,7 +104,11 @@ export default {
       }
     },
   mounted() {
+      console.log(store.state.book);
       this.book= store.state.book;
+  },
+  created() {
+
   }
 }
 </script>

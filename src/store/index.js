@@ -2,12 +2,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 // 创建一个store
+// const store = new Vuex.Store({
+//   state:sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')): {
+//     //id
+//     skillId:'',
+//     //技能状态
+//     checkStatus:''
+//   }
+// })
+
+// export default new Vuex.Store({
+//   // 设置全局访问的state对象
+//   state: {
 export default new Vuex.Store({
-  // 设置全局访问的state对象
-  state: {
+  state:sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')): {
     //用户的信息
     user:{
-      uid:'5',
+      uid:'2',
       name:'',
       password:'',
       mail:''
@@ -58,7 +69,7 @@ export default new Vuex.Store({
       orderTime:'2021-10-19',
       state:'未发货',
       uid:'12',
-      bid:'3',
+      bid:'5',
       bnumber:'34',
       totalPrice:'333'
     },

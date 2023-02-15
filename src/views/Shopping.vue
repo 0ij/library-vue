@@ -162,6 +162,7 @@ export default {
       this.multipleSelection = val;
     }
   },mounted() {
+    console.log("shopping"+store.state.user.uid)
     this.load();
   }
 }
