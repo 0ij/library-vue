@@ -56,10 +56,10 @@ export default {
           this.$axios.post(url,{
             bname:this.searchForm.bname,
             author:this.searchForm.author,
-            ISBN:this.searchForm.ISBN
+            isbn:this.searchForm.ISBN
           }).then(res=>{
             console.log(res.data);
-            store.commit("getSearchResult",res.data.books);
+            store.commit("getSearchResult",res.data);
             router.push("/searchBook")
           },err=>{
             console.log(err);

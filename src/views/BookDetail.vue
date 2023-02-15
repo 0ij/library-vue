@@ -6,7 +6,7 @@
     <el-main>
       <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
         <el-menu-item index="1" @click="search">搜索书本</el-menu-item>
-        <el-menu-item index="2" @click="book">全部书籍</el-menu-item>
+        <el-menu-item index="2" @click="tobook">全部书籍</el-menu-item>
         <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
         <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
         <el-menu-item index="5" @click="help">帮助</el-menu-item>
@@ -96,7 +96,7 @@ export default {
       search(){
         this.$router.push('/search');
       },
-      book(){
+      tobook(){
         this.$router.push('/book');
       },
       shopping(){

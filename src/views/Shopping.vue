@@ -98,60 +98,86 @@ export default {
       ],
       drawer:false,
       sum:0,
-      multipleSelection:[]
+      multipleSelection:[],
+      orderItem:{
+        oid:'store190876',
+        orderTime:'2021-10-19',
+        state:'未发货',
+        uid:'12',
+        bid:'5',
+        bnumber:'34',
+        totalPrice:'333'
+      },
+      newOrder:[]
     }
   },
   methods:{
     load(){
       this.tableData=store.state.cart;
     },
+    //生成当前时间
+    timestampToTime(times) {
+      let time = times[1]
+      let mdy = times[0]
+      mdy = mdy.split('/')
+      let month = parseInt(mdy[0]);
+      let day = parseInt(mdy[1]);
+      let year = parseInt(mdy[2])
+      return year + '-' + month + '-' + day + ' ' + time
+    },
     //生成订单后发送给后端
     makeOrder(){
-      // var time = new Date();
-      // //生成关于订单的表单数据
-      // let formdata=new FormData();
-      // //此时订单号为空
-      // formdata.append("oid",'');
-      // formdata.append("orderTime",time.toLocaleString());
-      // formdata.append("state",'0');
-      // formdata.append("uid",store.state.user.uid);
-      // formdata.append("bid",this.book.bid);
-      // //此处传入的数据界面中还没有，传入书本的数量
-      // formdata.append("bnumber",this.num);
-      // //传入总价，数量乘单价
-      // formdata.append("totalPrice",(this.num*this.book.price).toString());
+      console.log(this.multipleSelection[0].num*this.multipleSelection[0].price)
+      let time = new Date()
+      let nowTime = (this.timestampToTime(time.toLocaleString('en-US',{hour12: false}).split(" "))).toString()
 
-      var url=this.$baseUrl+'/ord/addOrd';
-      // console.log(this.searchForm)
-      this.$axios.post(url,{
-        oid:formdata.get(oid),
-        orderTime:formdata.orderTime,
-        state:formdata.state,
-        uid:formdata.uid,
-        bid:formdata.bid,
-        bnumber:formdata.bnumber,
-        totalPrice:formdata.totalPrice
-      }).then(res=>{
-        let message = res.data.msg;
-        if (message==='success'){
-          alert('订单生成成功！')
-          //新生成的订单加入订单界面，获取信息，获取所有订单！
-          var url=this.$baseUrl+'/ord/getOrds';
-          this.$axios.get(url,{
-            params: {
-              uid:store.state.user.id
-            }
+      if(store.state.user.uid===''){
+        alert('登录后才可生成订单');
+        this.$router.push('/login');
+      }else{
+        var url=this.$baseUrl+'/ord/addOrd';
+        // console.log(this.searchForm)
+        let i=0;
+        console.log(nowTime);
+        for(i=0;i<this.multipleSelection.length;i++){
+          this.orderItem.bid=this.multipleSelection[i].bid;
+          this.orderItem.orderTime=nowTime;
+          this.orderItem.uid=store.state.user.uid;
+          this.orderItem.state=this.multipleSelection[i].state;
+          this.orderItem.bnumber=this.multipleSelection[i].num;
+          this.orderItem.totalPrice=this.multipleSelection[i].num*this.multipleSelection[i].price;
+          this.$axios.post(url,{
+            orderTime:this.orderItem.orderTime,
+            state:this.orderItem.state,
+            uid:this.orderItem.uid,
+            bid:this.orderItem.bid,
+            bnumber:this.orderItem.bnumber,
+            totalPrice:this.orderItem.totalPrice
           }).then(res=>{
             let message = res.data.msg;
             if (message==='success'){
-              store.commit('setOrders',res.data);
+              alert('订单生成成功！')
+              //新生成的订单加入订单界面，获取信息，获取所有订单！
+              var url=this.$baseUrl+'/ord/getOrds';
+              this.$axios.get(url,{
+                params: {
+                  uid:store.state.user.id
+                }
+              }).then(res=>{
+                let message = res.data.msg;
+                if (message==='success'){
+                  store.commit('setOrders',res.data);
+                }
+              })
+            }else{
+              /*打印错误信息*/
+              alert("生成订单失败");
             }
           })
-        }else{
-          /*打印错误信息*/
-          alert("生成订单失败");
         }
-      })
+
+      }
+
     },
     search(){
       this.$router.push('/search');
