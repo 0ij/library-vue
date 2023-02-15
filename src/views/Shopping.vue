@@ -109,6 +109,30 @@ export default {
       // }
       this.tableData=store.state.cart;
     },
+    search(){
+      this.$router.push('/search');
+    },
+    book(){
+      this.$router.push('/book');
+    },
+    shopping(){
+      this.$router.push('/shopping');
+    },
+    help(){
+      this.$router.push('/help');
+    },
+    faq(){
+      this.$router.push('/faq');
+    },
+    rule(){
+      this.$router.push('/rule');
+    },
+    contact(){
+      this.$router.push('/contact');
+    },
+    home(){
+      this.$router.push('/welcome');
+    },
     orders(){
       if(store.state.user.uid===''){
         alert('未登录用户不可查看订单界面')

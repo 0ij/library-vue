@@ -16,7 +16,7 @@
             <p>书名：{{book.bname}}</p>
             <p>作者：{{book.author}}</p>
             <p>ISBN:{{book.ISBN}}</p>
-            <p style="text-align: left;">简介：{{book.abs}}</p>
+            <p style="text-align: left;">简介：{{book.info}}</p>
             <p>价格：{{book.price}}</p>
             <p><el-input-number v-model="num" :min="1" :max="10"></el-input-number></p>
             <el-button type="primary" plain style="margin-top: 10px;"  @click="addIntoCart()">加入购物车</el-button>
@@ -103,7 +103,7 @@ export default {
         })
       }
     },
-  created() {
+  mounted() {
       this.book= store.state.book;
   }
 }

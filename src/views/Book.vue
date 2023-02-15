@@ -14,20 +14,21 @@
                   <el-tooltip effect="dark" placement="right"
                               v-for="item in bookSaledGood"
                               :key="item.id">
-                    <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
+                    <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.bname}}</p>
                     <p slot="content" style="font-size: 13px;margin-bottom: 6px">
                       <span>{{item.author}}</span> /
                       <span>{{item.price}}元</span>
                     </p>
-                    <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
+                    <p slot="content" style="width: 300px" class="abstract">{{item.info}}</p>
                     <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
                              bodyStyle="padding:10px" shadow="hover">
                       <div class="cover">
-                        <img :src="item.cover" alt="封面">
+                        <img :src="item.pic" alt="封面">
                       </div>
                       <div class="info">
-                        <div class="title">
-                          <router-link to="/bookdetail">{{item.title}}</router-link>
+                        <div class="title" @click="toDetail(item)">
+                          {{item.bname}}
+<!--                          <router-link to="/bookdetail">{{item.title}}</router-link>-->
                         </div>
                       </div>
                       <div class="author">{{item.author}}</div>
@@ -49,20 +50,21 @@
                   <el-tooltip effect="dark" placement="right"
                               v-for="item in bookRecent"
                               :key="item.id">
-                    <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
+                    <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.bname}}</p>
                     <p slot="content" style="font-size: 13px;margin-bottom: 6px">
                       <span>{{item.author}}</span> /
                       <span>{{item.price}}元</span>
                     </p>
-                    <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
+                    <p slot="content" style="width: 300px" class="abstract">{{item.info}}</p>
                     <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
                              bodyStyle="padding:10px" shadow="hover">
-                      <div class="cover">
-                        <img :src="item.cover" alt="封面">
+                      <div class="cover" >
+                        <img :src="item.pic" alt="封面">
                       </div>
                       <div class="info">
-                        <div class="title">
-                          <router-link to="/bookdetail">{{item.title}}</router-link>
+                        <div class="title" @click="toDetail(item)">
+<!--                          <router-link to="/bookdetail">{{item.title}}</router-link>-->
+                          {{item.bname}}
                         </div>
                       </div>
                       <div class="author">{{item.author}}</div>
@@ -107,7 +109,7 @@ export default {
           user:{},
             books: [
                 {
-                    cover: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+                    pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
                     ISBN:'12121',
                     title: '三体',
                     author: '刘慈欣',
@@ -115,7 +117,7 @@ export default {
                     abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
                 },
                 {
-                    cover: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+                    pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
                     ISBN:'12121',
                     title: '三体',
                     author: '刘慈欣',
@@ -163,7 +165,7 @@ export default {
       },
       toDetail(item){
         //传入被点击的书籍的数据
-       console.log(store.state.user);
+        //alert('详情界面')
         store.commit('setBook',item)
         this.$router.push({
             name:'bookhome.jsp',
