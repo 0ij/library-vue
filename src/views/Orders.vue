@@ -121,10 +121,12 @@ export default {
     }
   },
   created() {
+    console.log(store.state.user.uid);
+    let uid=Number(store.state.user.uid);
     var url=this.$baseUrl+'/ord/getOrds';
     this.$axios.get(url,{
       params: {
-        uid:store.state.user.id
+        uid:uid
       }
     }).then(res=>{
       this.orders=res.data;

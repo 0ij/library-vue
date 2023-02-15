@@ -8,8 +8,11 @@
         <el-menu-item index="1" @click="search">搜索书本</el-menu-item>
         <el-menu-item index="2" @click="book">全部书籍</el-menu-item>
         <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
-        <el-menu-item index="4" @click="help">帮助</el-menu-item>
-        <el-menu-item index="5" @click="home">退出登录</el-menu-item>
+        <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
+        <el-menu-item index="5" @click="help">帮助</el-menu-item>
+        <el-menu-item index="6" @click="register">创建新账号</el-menu-item>
+        <el-menu-item index="7" @click="login">登录</el-menu-item>
+        <el-menu-item index="8" @click="home" >退出登录</el-menu-item>
       </el-menu>
       <div style="margin-top: 20px;">
         <el-table
@@ -106,20 +109,18 @@ export default {
       // }
       this.tableData=store.state.cart;
     },
-    search(){
-      this.$router.push('/search');
+    orders(){
+      if(store.state.user.uid===''){
+        alert('未登录用户不可查看订单界面')
+      }else{
+        this.$router.push('/orders');
+      }
     },
-    book(){
-      this.$router.push('/book');
+    register(){
+      this.$router.push('/register');
     },
-    shopping(){
-      this.$router.push('/shopping');
-    },
-    help(){
-      this.$router.push('/help');
-    },
-    home(){
-      this.$router.push('/');
+    login(){
+      this.$router.push('/login');
     },
     comfirm(){
       if(Object.keys(this.multipleSelection).length!==0){
