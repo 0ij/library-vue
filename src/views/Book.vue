@@ -146,7 +146,7 @@ export default {
             ],
           //存放销量好的书籍
           bookSaledGood:[{
-            pic: '../assets/1.jpg',
+            pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
             ISBN:'12121',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
@@ -156,7 +156,7 @@ export default {
           }],
           //存放新进书籍
           bookRecent: [{
-            pic: '../assets/1.jpg',
+            pic: '../assets/1.png',
             ISBN:'12121',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
