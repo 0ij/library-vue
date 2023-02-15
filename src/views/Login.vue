@@ -2,7 +2,7 @@
   <body id="poster">
     <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-container" label-position="left">
       <h3 class="login-title">登录在线图书馆</h3>
-      <el-form-item label="账户" prop="username">
+      <el-form-item label="邮箱号" prop="username">
         <el-input v-model="loginForm.email" type="text"></el-input>
       </el-form-item>
       <el-form-item  label="密码" prop="password" >
@@ -38,7 +38,7 @@ export default {
       rules: {
         // 设置账户效验规则
         email: [
-          {required: true, message: '请输入账户', trigger: 'blur'},
+          {required: true, message: '请输入邮箱号', trigger: 'blur'},
           {min: 1, max: 30, message: '请输入正确的账号名', trigger: 'blur'}
         ],
         // 设置密码效验规则
@@ -51,19 +51,20 @@ export default {
   },
   methods: {
     login(formName) {
-      var url=this.$baseUrl+'user/login';
-      let formdata=new FormData();
-      formdata.append("email",this.loginForm.email);
-      formdata.append("password",this.loginForm.password);
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      if(this.loginForm.email!=''&&this.loginForm.password!=''){
+        var url=this.$baseUrl+'user/login';
+        let formdata=new FormData();
+        formdata.append("email",this.loginForm.email);
+        formdata.append("password",this.loginForm.password);
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
         }
-      }
-      this.$axios.post(url, {
-        mail:this.loginForm.email,
-        password:this.loginForm.password
-      }).then(res => {
+        this.$axios.post(url, {
+          mail:this.loginForm.email,
+          password:this.loginForm.password
+        }).then(res => {
           //console.log(res.uname);
           let message = res.data.msg;
           // 判断结果
@@ -77,8 +78,10 @@ export default {
             this.$router.push("/shopping");
           }
         }
-      )
-
+        )
+      }else{
+        alert('请输入完整信息')
+      }
     },
    toRegister(){
      router.push("/register")

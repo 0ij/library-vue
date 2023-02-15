@@ -1,29 +1,30 @@
 <template>
-    <el-container>
-        <el-header class="header-form">
-            <h1>详情信息</h1>
-        </el-header>
-        <el-main>
-            <MyNav></MyNav>
-            <el-container>
-                <el-aside width="40%">
-                    <div class="cover">
-                        <img :src="book.pic">
-                    </div>
-                </el-aside>
-                <el-main class="des">
-                    <div style="width: 600px;margin-left:100px;">
-                        <p>书名：{{book.bname}}</p>
-                        <p>作者：{{book.author}}</p>
-                        <p>ISBN:{{book.ISBN}}</p>
-                        <p style="text-align: left;">简介：{{book.abs}}</p>
-                        <p>价格：{{book.price}}</p>
-                        <el-button type="primary" plain style="margin-top: 10px;"  @click="addIntoCart()">加入购物车</el-button>
-                    </div>
-                </el-main>
-            </el-container>
+  <el-container>
+    <el-header class="header-form">
+      <h1>详情信息</h1>
+    </el-header>
+    <el-main>
+      <MyNav></MyNav>
+      <el-container>
+        <el-aside width="40%">
+          <div class="cover">
+            <img :src="book.pic">
+          </div>
+        </el-aside>
+        <el-main class="des">
+          <div style="width: 600px;margin-left:100px;">
+            <p>书名：{{book.bname}}</p>
+            <p>作者：{{book.author}}</p>
+            <p>ISBN:{{book.ISBN}}</p>
+            <p style="text-align: left;">简介：{{book.abs}}</p>
+            <p>价格：{{book.price}}</p>
+            <p><el-input-number v-model="num" :min="1" :max="10"></el-input-number></p>
+            <el-button type="primary" plain style="margin-top: 10px;"  @click="addIntoCart()">加入购物车</el-button>
+          </div>
         </el-main>
-    </el-container>
+      </el-container>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
@@ -42,7 +43,8 @@ export default {
           book:{
           },
           order:{
-          }
+          },
+          num:1
         }
     },
     methods:{
@@ -64,9 +66,9 @@ export default {
         formdata.append("uid",store.state.user.uid);
         formdata.append("bid",this.book.bid);
         //此处传入的数据界面中还没有，传入书本的数量
-        formdata.append("bnumber",number);
+        formdata.append("bnumber",this.num);
         //传入总价，数量乘单价
-        formdata.append("totalPrice",(number*this.book.price).toString());
+        formdata.append("totalPrice",(this.num*this.book.price).toString());
 
         var url=this.$baseUrl+'/ord/addOrd';
         // console.log(this.searchForm)

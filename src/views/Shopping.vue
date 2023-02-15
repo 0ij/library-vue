@@ -22,7 +22,7 @@
             width="55" center>
           </el-table-column>
           <el-table-column
-            prop="title"
+            prop="bname"
             label="书名"
             min-width="7%" align="center">
           </el-table-column>
@@ -54,7 +54,7 @@
         :before-close="handleClose">
         <div v-for="book in multipleSelection">
           <div>
-            <p>书名：{{book.title}}</p>
+            <p>书名：{{book.bname}}</p>
             <p>价格：{{book.price}}</p>
             <p>数量：{{book.num}}</p>
           </div>
@@ -68,23 +68,25 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   name:'Shopping',
   data(){
     return{
       tableData:[
         {
-          title:'三体',
+          bname:'三体',
           price:'30',
           num:1
         },
         {
-          title:'三体',
+          bname:'三体',
           price:'30',
           num:1
         },
         {
-          title:'三体',
+          bname:'三体',
           price:'30',
           num:1
         }
@@ -95,6 +97,15 @@ export default {
     }
   },
   methods:{
+    load(){
+      // let formdata=new FormData();
+      // formdata.append("email",this.loginForm.email);
+      // let i=0;
+      // for(i=0;i<store.state.cart.length;i++){
+      //
+      // }
+      this.tableData=store.state.cart;
+    },
     search(){
       this.$router.push('/search');
     },
@@ -108,7 +119,7 @@ export default {
       this.$router.push('/help');
     },
     home(){
-      this.$router.push('/welcome');
+      this.$router.push('/');
     },
     comfirm(){
       if(Object.keys(this.multipleSelection).length!==0){
@@ -125,6 +136,8 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     }
+  },mounted() {
+    this.load();
   }
 }
 </script>

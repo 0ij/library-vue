@@ -1,17 +1,18 @@
 <template>
-    <el-container>
-        <el-header class="header-form">
-<!--            <h1>全部书籍1</h1>-->
-          <h1>user:{{user.uid}}</h1>
-        </el-header>
-        <el-main>
-            <MyNav></MyNav>
-            <div>
-              <h1>热销书</h1>
-              <h2>新进书</h2>
+  <el-container>
+    <el-header class="header-form">
+      <h1>全部书籍</h1>
+    </el-header>
+    <el-main>
+      <MyNav></MyNav>
+      <div>
+        <div class="form">
+          <el-tabs v-model="active">
+            <el-tab-pane label="热销书" name="1">
+              <div>
                 <el-row style="height: 840px;margin-top:30px;">
                   <el-tooltip effect="dark" placement="right"
-                              v-for="item in books"
+                              v-for="item in bookSaledGood"
                               :key="item.id">
                     <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
                     <p slot="content" style="font-size: 13px;margin-bottom: 6px">
@@ -25,8 +26,8 @@
                         <img :src="item.cover" alt="封面">
                       </div>
                       <div class="info">
-                        <div class="title" @click="toDetail(item)">
-                            {{item.title}}
+                        <div class="title">
+                          <router-link to="/bookdetail">{{item.title}}</router-link>
                         </div>
                       </div>
                       <div class="author">{{item.author}}</div>
@@ -41,8 +42,54 @@
                   </el-pagination>
                 </el-row>
               </div>
-        </el-main>
-    </el-container>
+            </el-tab-pane>
+            <el-tab-pane label="新进书" name="2">
+              <div>
+                <el-row style="height: 840px;margin-top:30px;">
+                  <el-tooltip effect="dark" placement="right"
+                              v-for="item in bookRecent"
+                              :key="item.id">
+                    <p slot="content" style="font-size: 14px;margin-bottom: 6px;">{{item.title}}</p>
+                    <p slot="content" style="font-size: 13px;margin-bottom: 6px">
+                      <span>{{item.author}}</span> /
+                      <span>{{item.price}}元</span>
+                    </p>
+                    <p slot="content" style="width: 300px" class="abstract">{{item.abs}}</p>
+                    <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
+                             bodyStyle="padding:10px" shadow="hover">
+                      <div class="cover">
+                        <img :src="item.cover" alt="封面">
+                      </div>
+                      <div class="info">
+                        <div class="title">
+                          <router-link to="/bookdetail">{{item.title}}</router-link>
+                        </div>
+                      </div>
+                      <div class="author">{{item.author}}</div>
+                    </el-card>
+                  </el-tooltip>
+                </el-row>
+                <el-row>
+                  <el-pagination
+                    :current-page="1"
+                    :page-size="10"
+                    :total="20">
+                  </el-pagination>
+                </el-row>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
+        </div>
+        <el-row>
+          <el-pagination
+            :current-page="1"
+            :page-size="10"
+            :total="20">
+          </el-pagination>
+        </el-row>
+      </div>
+    </el-main>
+  </el-container>
 </template>
 
 <script>

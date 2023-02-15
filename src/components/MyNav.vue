@@ -5,7 +5,9 @@
     <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
     <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
     <el-menu-item index="5" @click="help">帮助</el-menu-item>
-    <el-menu-item index="6" @click="home">退出登录</el-menu-item>
+    <el-menu-item index="6" @click="register">创建新账号</el-menu-item>
+    <el-menu-item index="7" @click="login">登录</el-menu-item>
+    <el-menu-item index="8" @click="home" >退出登录</el-menu-item>
   </el-menu>
 </template>
 
@@ -46,6 +48,12 @@ export default {
       }else{
         this.$router.push('/orders');
       }
+    },
+    register(){
+      this.$router.push('/register');
+    },
+    login(){
+      this.$router.push('/login');
     }
   }
 }
