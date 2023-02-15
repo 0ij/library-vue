@@ -77,8 +77,8 @@ export default {
   name:'Shopping',
   data(){
     return{
-      isShow:false,
-      isShow1:true,
+      isShow:true,
+      isShow1:false,
       tableData:[
         {
           bname:'三体',
@@ -103,29 +103,23 @@ export default {
   },
   methods:{
     load(){
-      // let formdata=new FormData();
-      // formdata.append("email",this.loginForm.email);
-      // let i=0;
-      // for(i=0;i<store.state.cart.length;i++){
-      //
-      // }
       this.tableData=store.state.cart;
     },
     //生成订单后发送给后端
     makeOrder(){
-      var time = new Date();
-      //生成关于订单的表单数据
-      let formdata=new FormData();
-      //此时订单号为空
-      formdata.append("oid",'');
-      formdata.append("orderTime",time.toLocaleString());
-      formdata.append("state",'0');
-      formdata.append("uid",store.state.user.uid);
-      formdata.append("bid",this.book.bid);
-      //此处传入的数据界面中还没有，传入书本的数量
-      formdata.append("bnumber",this.num);
-      //传入总价，数量乘单价
-      formdata.append("totalPrice",(this.num*this.book.price).toString());
+      // var time = new Date();
+      // //生成关于订单的表单数据
+      // let formdata=new FormData();
+      // //此时订单号为空
+      // formdata.append("oid",'');
+      // formdata.append("orderTime",time.toLocaleString());
+      // formdata.append("state",'0');
+      // formdata.append("uid",store.state.user.uid);
+      // formdata.append("bid",this.book.bid);
+      // //此处传入的数据界面中还没有，传入书本的数量
+      // formdata.append("bnumber",this.num);
+      // //传入总价，数量乘单价
+      // formdata.append("totalPrice",(this.num*this.book.price).toString());
 
       var url=this.$baseUrl+'/ord/addOrd';
       // console.log(this.searchForm)
@@ -194,6 +188,7 @@ export default {
       this.$router.push('/register');
     },
     login(){
+      //if(state.user.uid!=)
       this.$router.push('/login');
     },
     comfirm(){
@@ -215,6 +210,9 @@ export default {
     if(store.state.user.uid===''){
       this.isShow=true;
       this.isShow1=false;
+    }else{
+      this.isShow=false;
+      this.isShow1=true;
     }
     this.load();
   }

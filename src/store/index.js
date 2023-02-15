@@ -18,7 +18,7 @@ export default new Vuex.Store({
   state:sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getItem('state')): {
     //用户的信息
     user:{
-      uid:'2',
+      uid:'',
       name:'',
       password:'',
       mail:''

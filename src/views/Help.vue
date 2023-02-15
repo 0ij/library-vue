@@ -31,6 +31,12 @@ export default {
   components:{
     MyNav
   },
+  data(){
+      return{
+        isShow:true,
+        isShow1:false,
+    }
+  },
     methods:{
         faq(){
             this.$router.push('/faq');
@@ -40,9 +46,46 @@ export default {
         },
         contact(){
             this.$router.push('/contact');
+        },
+      search(){
+        this.$router.push('/search');
+      },
+      book(){
+        this.$router.push('/book');
+      },
+      shopping(){
+        this.$router.push('/shopping');
+      },
+      help(){
+        this.$router.push('/help');
+      },
+      home(){
+        this.$router.push('/');
+      },
+      orders(){
+        if(store.state.user.uid===''){
+          alert('未登录用户不可查看订单界面')
+        }else{
+          this.$router.push('/orders');
         }
+      },
+      register(){
+        this.$router.push('/register');
+      },
+      login(){
+        //if(state.user.uid!=)
+        this.$router.push('/login');
+      },
 
-    }
+    },mounted() {
+      if(store.state.user.uid===''){
+        this.isShow=true;
+        this.isShow1=false;
+      }else{
+        this.isShow=false;
+        this.isShow1=true;
+      }
+  }
 }
 </script>
 
