@@ -64,7 +64,7 @@
           <el-divider></el-divider>
         </div>
         <h1>总价：{{this.sum}}</h1>
-        <el-button type="primary" plain>提交订单</el-button>
+        <el-button type="primary" plain @click="makeOrder">提交订单</el-button>
       </el-drawer>
     </el-main>
   </el-container>
@@ -110,6 +110,54 @@ export default {
       //
       // }
       this.tableData=store.state.cart;
+    },
+    //生成订单后发送给后端
+    makeOrder(){
+      var time = new Date();
+      //生成关于订单的表单数据
+      let formdata=new FormData();
+      //此时订单号为空
+      formdata.append("oid",'');
+      formdata.append("orderTime",time.toLocaleString());
+      formdata.append("state",'0');
+      formdata.append("uid",store.state.user.uid);
+      formdata.append("bid",this.book.bid);
+      //此处传入的数据界面中还没有，传入书本的数量
+      formdata.append("bnumber",this.num);
+      //传入总价，数量乘单价
+      formdata.append("totalPrice",(this.num*this.book.price).toString());
+
+      var url=this.$baseUrl+'/ord/addOrd';
+      // console.log(this.searchForm)
+      this.$axios.post(url,{
+        oid:formdata.get(oid),
+        orderTime:formdata.orderTime,
+        state:formdata.state,
+        uid:formdata.uid,
+        bid:formdata.bid,
+        bnumber:formdata.bnumber,
+        totalPrice:formdata.totalPrice
+      }).then(res=>{
+        let message = res.data.msg;
+        if (message==='success'){
+          alert('订单生成成功！')
+          //新生成的订单加入订单界面，获取信息，获取所有订单！
+          var url=this.$baseUrl+'/ord/getOrds';
+          this.$axios.get(url,{
+            params: {
+              uid:store.state.user.id
+            }
+          }).then(res=>{
+            let message = res.data.msg;
+            if (message==='success'){
+              store.commit('setOrders',res.data);
+            }
+          })
+        }else{
+          /*打印错误信息*/
+          alert("生成订单失败");
+        }
+      })
     },
     search(){
       this.$router.push('/search');
