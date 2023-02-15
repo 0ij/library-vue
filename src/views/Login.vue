@@ -85,42 +85,44 @@ export default {
    },
     //忘记密码
     forgetPassword() {
-      this.$alert('发送用户名到管理员邮箱xxxxx@163.com找回密码', '忘记密码？', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          });
-        }
-      });
-      //传数据
-      var url=this.$baseUrl+'user/mailPassword';
-      let formdata=new FormData();
-      formdata.append("username",this.loginForm.email);
-      formdata.append("password",this.loginForm.password);
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      this.$axios.post(url, {
-        mail:this.loginForm.email,
-        password:this.loginForm.password
-      }).then(res => {
-        console.log(res.uname);
-        // 拿到结果
-        //let result = JSON.parse(res.data.data);
-        let message = res.data.msg;
-        // 判断结果
-        if (message==='true')                        {
-          alert("密码为"+message.password+",建议您修改密码");
-          router.push("/shopping")
-        }else{
-          /*打印错误信息*/
-          alert("账号或密码错误");
-        }}
-      )
+        this.$router.push('/reset');
+
+      // this.$alert('发送用户名到管理员邮箱xxxxx@163.com找回密码', '忘记密码？', {
+      //   confirmButtonText: '确定',
+      //   callback: action => {
+      //     this.$message({
+      //       type: 'info',
+      //       message: `action: ${action}`
+      //     });
+      //   }
+      // });
+      // //传数据
+      // var url=this.$baseUrl+'user/mailPassword';
+      // let formdata=new FormData();
+      // formdata.append("username",this.loginForm.email);
+      // formdata.append("password",this.loginForm.password);
+      // let config = {
+      //   headers: {
+      //     'Content-Type': 'multipart/form-data'
+      //   }
+      // }
+      // this.$axios.post(url, {
+      //   mail:this.loginForm.email,
+      //   password:this.loginForm.password
+      // }).then(res => {
+      //   console.log(res.uname);
+      //   // 拿到结果
+      //   //let result = JSON.parse(res.data.data);
+      //   let message = res.data.msg;
+      //   // 判断结果
+      //   if (message==='true')                        {
+      //     alert("密码为"+message.password+",建议您修改密码");
+      //     router.push("/shopping")
+      //   }else{
+      //     /*打印错误信息*/
+      //     alert("账号或密码错误");
+      //   }}
+      // )
     },
     //修改密码
     changePassword(){

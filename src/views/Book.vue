@@ -1,7 +1,8 @@
 <template>
     <el-container>
         <el-header class="header-form">
-            <h1>全部书籍</h1>
+<!--            <h1>全部书籍1</h1>-->
+          <h1>user:{{user.uid}}</h1>
         </el-header>
         <el-main>
             <MyNav></MyNav>
@@ -56,6 +57,7 @@ export default {
   },
     data(){
         return{
+          user:{},
             books: [
                 {
                     cover: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
@@ -109,10 +111,12 @@ export default {
         })
         //以上传递的两个都是包含所有书籍的数据
 
+        //获取用户信息
+        this.user=store.state.user;
       },
       toDetail(item){
         //传入被点击的书籍的数据
-       console.log(item)
+       console.log(store.state.user);
         store.commit('setBook',item)
         this.$router.push({
             name:'bookhome.jsp',

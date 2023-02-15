@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     //用户的信息
     user:{
-      uid:'',
+      uid:'test',
       name:'',
       password:'',
       mail:''

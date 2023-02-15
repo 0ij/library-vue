@@ -14,6 +14,7 @@ import Contact from '@/views/Contact'
 import BookDetail from '@/views/BookDetail'
 import SearchBook from '@/views/SearchBook'
 import Orders from "../views/Orders";
+import Reset from "../views/Reset";
 
 Vue.use(Router)
 
@@ -84,6 +85,11 @@ export default new Router({
       path:'/searchbook',
       name:'SearchBook',
       component:SearchBook
-    }
+    },
+    {
+      path:'/reset',
+      name:'Reset',
+      component:Reset
+    },
   ]
 })
