@@ -41,7 +41,9 @@ export default {
         }
     },
     methods:{
-
+      goBack() {
+        this.$router.push('/help');
+      }
     }
 }
 </script>

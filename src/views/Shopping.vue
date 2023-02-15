@@ -1,81 +1,136 @@
 <template>
-    <el-container>
-        <el-header class="header-form">
-            <h1>我的购物车</h1>
-        </el-header>
-        <el-main>
-           <MyNav></MyNav>
-            <div style="margin-top: 20px;">
-                <el-table
-					:data="tableData"
-					style="width: 100%">
-						<el-table-column
-							prop="title"
-							label="书名"
-							min-width="7%" align="center">
-						</el-table-column>
-						<el-table-column
-							prop="price"
-							label="价格"
-							min-width="7%" align="center">
-						</el-table-column>
-						<el-table-column
-						label="数量" min-width="5%" align="center">
-						<template slot-scope="scope">
-							<el-input min="1" type="number" v-model="scope.row.num" ></el-input>
-						</template>
-						</el-table-column>
-						<el-table-column label="操作" min-width="10%" align="center">
-							<template slot-scope="scope">
-								<el-button size="small" @click="del(scope.row.bid)">删除</el-button>
-							</template>
-						</el-table-column>
-				</el-table>
-            </div>
-            <div style="margin-top: 30px;">
-                <el-button type="primary" plain>结账</el-button>
-            </div>
-        </el-main>
-    </el-container>
+  <el-container>
+    <el-header class="header-form">
+      <h1>我的购物车</h1>
+    </el-header>
+    <el-main>
+      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu-item index="1" @click="search">搜索书本</el-menu-item>
+        <el-menu-item index="2" @click="book">全部书籍</el-menu-item>
+        <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
+        <el-menu-item index="4" @click="help">帮助</el-menu-item>
+        <el-menu-item index="5" @click="home">退出登录</el-menu-item>
+      </el-menu>
+      <div style="margin-top: 20px;">
+        <el-table
+          ref="multipleTable"
+          :data="tableData"
+          @selection-change="handleSelectionChange"
+          style="width: 100%">
+          <el-table-column
+            type="selection"
+            width="55" center>
+          </el-table-column>
+          <el-table-column
+            prop="title"
+            label="书名"
+            min-width="7%" align="center">
+          </el-table-column>
+          <el-table-column
+            prop="price"
+            label="价格"
+            min-width="7%" align="center">
+          </el-table-column>
+          <el-table-column
+            label="数量" min-width="5%" align="center">
+            <template slot-scope="scope">
+              <el-input min="1" type="number" v-model="scope.row.num" ></el-input>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" min-width="10%" align="center">
+            <template slot-scope="scope">
+              <el-button size="small" @click="del(scope.$index)">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div style="margin-top: 30px;">
+        <el-button type="primary" plain @click="comfirm">确认</el-button>
+      </div>
+      <el-drawer
+        title="确认订单"
+        :visible.sync="drawer"
+        :direction="direction"
+        :before-close="handleClose">
+        <div v-for="book in multipleSelection">
+          <div>
+            <p>书名：{{book.title}}</p>
+            <p>价格：{{book.price}}</p>
+            <p>数量：{{book.num}}</p>
+          </div>
+          <el-divider></el-divider>
+        </div>
+        <h1>总价：{{this.sum}}</h1>
+        <el-button type="primary" plain>提交订单</el-button>
+      </el-drawer>
+    </el-main>
+  </el-container>
 </template>
 
 <script>
-import MyNav from "../components/MyNav";
-import store from "../store";
-
 export default {
-    name:'Shopping',
-  components:{
-    MyNav
-  },
-    data(){
-        return{
-            tableData:[
-                {
-                    title:'三体',
-                    price:'30',
-                    num:1
-                }
-            ],
-          //购物车
-          cart:[
-
-          ]
+  name:'Shopping',
+  data(){
+    return{
+      tableData:[
+        {
+          title:'三体',
+          price:'30',
+          num:1
+        },
+        {
+          title:'三体',
+          price:'30',
+          num:1
+        },
+        {
+          title:'三体',
+          price:'30',
+          num:1
         }
+      ],
+      drawer:false,
+      sum:0,
+      multipleSelection:[]
+    }
+  },
+  methods:{
+    search(){
+      this.$router.push('/search');
     },
-    methods:{
-      load(){
-        this.cart=store.state.cart;
+    book(){
+      this.$router.push('/book');
+    },
+    shopping(){
+      this.$router.push('/shopping');
+    },
+    help(){
+      this.$router.push('/help');
+    },
+    home(){
+      this.$router.push('/welcome');
+    },
+    comfirm(){
+      if(Object.keys(this.multipleSelection).length!==0){
+        this.drawer=true;
+        this.sum=0;
+        Object.keys(this.multipleSelection).forEach((item)=>{
+          this.sum+=this.multipleSelection[item].price*this.multipleSelection[item].num;
+        })
+        console.log(this.sum);
+      }else{
+        alert("请选择要购买的书籍！！");
       }
     },
-    mounted() {
-     this.load();
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
     }
+  }
 }
 </script>
 
 <style scoped>
 .header-form {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 </style>

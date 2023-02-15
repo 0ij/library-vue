@@ -84,7 +84,7 @@ export default new Vuex.Store({
   // 修改状态
   mutations: {
     setName(state,data) {
-      state.user.name=data;
+      state.user.name=data.uname;
     },
     setEmail(state,email){
       state.user.mail=email;
@@ -93,9 +93,9 @@ export default new Vuex.Store({
       state.user.password=password;
     },
     login(state,data){
-      this.setName(state,data.name);
-      this.setEmail(state,data.email);
-      this.setPassword(data.password);
+      state.user.password=data.password;
+      state.user.name=data.uname;
+      state.user.mail=data.mail;
       state.user.uid=data.uid;
     },
     getSearchResult(state,data){

@@ -1,7 +1,9 @@
 <template>
     <el-container>
-        <el-header>欢迎来到网上书店！！</el-header>
+      <h1>欢迎来到网上书店</h1>
+        <el-header><MyNav></MyNav></el-header>
         <el-container>
+
             <el-main width="50%">
               <el-button type="primary" plain @click="register">注册</el-button>
             </el-main>
@@ -13,8 +15,10 @@
 </template>
 
 <script>
+import MyNav from "../components/MyNav";
 export default {
   name: "Welcome",
+  components: {MyNav},
   methods:{
     register(){
       this.$router.push('/register');

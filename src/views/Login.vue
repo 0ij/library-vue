@@ -64,18 +64,19 @@ export default {
         mail:this.loginForm.email,
         password:this.loginForm.password
       }).then(res => {
-        //console.log(res.uname);
-        let message = res.data.msg;
-        // 判断结果
-        if (message==='true')                        {
-          /*登陆成功*/
-          alert("登陆成功");
-          store.commit('login',res.data);
-          router.push("/welcome")
-        }else{
-          /*打印错误信息*/
-          alert("账号或密码错误");
-        }}
+          //console.log(res.uname);
+          let message = res.data.msg;
+          // 判断结果
+          if (message == "wrong") {
+            /*打印错误信息*/
+            alert("账号或密码错误");
+          } else {
+            /*登陆成功*/
+            //alert("登陆成功");
+            store.commit('login', res.data);
+            this.$router.push("/shopping");
+          }
+        }
       )
 
     },
