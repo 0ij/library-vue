@@ -28,7 +28,7 @@
                     <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
                              bodyStyle="padding:10px" shadow="hover">
                       <div class="cover" @click="detail(item)">
-                        <img :src="item.pic" alt="封面">
+                        <img :src="require('../assets/'+item.pic)" alt="封面">
                       </div>
                       <div class="info">
                         <div class="title">

@@ -25,6 +25,11 @@
             width="55" center>
           </el-table-column>
           <el-table-column
+            prop="bid"
+            label="书号"
+            min-width="7%" align="center">
+          </el-table-column>
+          <el-table-column
             prop="bname"
             label="书名"
             min-width="7%" align="center">
@@ -80,21 +85,21 @@ export default {
       isShow:true,
       isShow1:false,
       tableData:[
-        {
-          bname:'三体',
-          price:'30',
-          num:1
-        },
-        {
-          bname:'三体',
-          price:'30',
-          num:1
-        },
-        {
-          bname:'三体',
-          price:'30',
-          num:1
-        }
+        // {
+        //   bname:'三体',
+        //   price:'30',
+        //   num:1
+        // },
+        // {
+        //   bname:'三体',
+        //   price:'30',
+        //   num:1
+        // },
+        // {
+        //   bname:'三体',
+        //   price:'30',
+        //   num:1
+        // }
       ],
       drawer:false,
       sum:0,
@@ -127,10 +132,9 @@ export default {
     },
     //生成订单后发送给后端
     makeOrder(){
-      console.log(this.multipleSelection[0].num*this.multipleSelection[0].price)
+      // console.log(this.multipleSelection[0].num*this.multipleSelection[0].price)
       let time = new Date()
       let nowTime = (this.timestampToTime(time.toLocaleString('en-US',{hour12: false}).split(" "))).toString()
-
       if(store.state.user.uid===''){
         alert('登录后才可生成订单');
         this.$router.push('/login');
@@ -138,24 +142,21 @@ export default {
         var url=this.$baseUrl+'/ord/addOrd';
         // console.log(this.searchForm)
         let i=0;
-        console.log(nowTime);
         for(i=0;i<this.multipleSelection.length;i++){
+          console.log(this.multipleSelection[i]);
           this.orderItem.bid=this.multipleSelection[i].bid;
           //this.orderItem.orderTime=nowTime;
           this.orderItem.uid=store.state.user.uid;
-          this.orderItem.state=this.multipleSelection[i].state;
           this.orderItem.bnumber=this.multipleSelection[i].num;
-          this.orderItem.totalPrice=this.multipleSelection[i].num*this.multipleSelection[i].price;
+          //this.orderItem.totalPrice=this.multipleSelection[i].num*this.multipleSelection[i].price;
           this.$axios.post(url,{
-            //orderTime:this.orderItem.orderTime,
-            state:this.orderItem.state,
             uid:this.orderItem.uid,
             bid:this.orderItem.bid,
             bnumber:this.orderItem.bnumber,
-            totalPrice:this.orderItem.totalPrice
+            //totalPrice:this.orderItem.totalPrice
           }).then(res=>{
-            let message = res.data.msg;
-            if (message==='success'){
+            let message = res.data;
+            if (message=='success'){
               alert('订单生成成功！')
               //新生成的订单加入订单界面，获取信息，获取所有订单！
               var url=this.$baseUrl+'/ord/getOrds';

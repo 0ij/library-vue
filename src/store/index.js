@@ -124,9 +124,9 @@ export default new Vuex.Store({
         }
       }
     },
-    addIntoCart(state,book){
-      console.log(book);
-      state.cart.push(book);
+    addIntoCart(state,cartItem){
+      console.log('购物车加入：'+cartItem);
+      state.cart.push(cartItem);
       // state.cart.push(book);
       // let l=state.cart.length;
       // state.cart[l-1].num=num;

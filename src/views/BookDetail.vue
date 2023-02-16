@@ -17,7 +17,7 @@
       <el-container>
         <el-aside width="40%">
           <div class="cover">
-            <img :src="book.pic">
+            <img :src="require('../assets/'+book.pic)" alt="封面">
           </div>
         </el-aside>
         <el-main class="des">
@@ -57,6 +57,7 @@ export default {
             num:'',
             pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
             ISBN:'12121',
+            bid:'',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
             price: '30',
@@ -90,6 +91,7 @@ export default {
         this.cartItem.price=this.book.price;
         this.cartItem.ISBN=this.book.ISBN;
         this.cartItem.num=this.num;
+        this.cartItem.bid=this.book.bid;
         store.commit('addIntoCart',this.cartItem);
         alert('成功加入购物车');
       },
