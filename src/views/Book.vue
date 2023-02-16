@@ -119,44 +119,12 @@ export default {
           isShow1:false,
           user:{},
             books: [
-                {
-                    pic: '1.jpg',
-                    ISBN:'12121',
-                    title: '三体',
-                    author: '刘慈欣',
-                    price: '30',
-                    abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
-                },
-                {
-                    pic: '1.jpg',
-                    ISBN:'12121',
-                    title: '三体',
-                    author: '刘慈欣',
-                    price: '30',
-                    abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
-                },
-                {
-                    cover: '1.jpg',
-                    ISBN:'12121',
-                    title: '三体',
-                    author: '刘慈欣',
-                    price: '30',
-                    abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
-                }
             ],
           //存放销量好的书籍
-          bookSaledGood:[{
-            pic: '1.jpg',
-            ISBN:'12121',
-            bname: 'store里被选中的三体',
-            author: '刘慈欣',
-            price: '30',
-            info: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
-
-          }],
+          bookSaledGood:[],
           //存放新进书籍
           bookRecent: [{
-            pic: '1.jpg',
+            pic: '三体.png',
             ISBN:'12121',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
@@ -172,8 +140,9 @@ export default {
         //获取销量好的书籍
         var url=this.$baseUrl+'/book/getBooksBySales';
         this.$axios.get(url).then(res => {
-          this.bookSaledGood=res.data;
           store.commit('setBookSaledGood',res.data);
+          console.log(res.data);
+          this.bookSaledGood=res.data;
         })
         //获取新进书籍
         var url1=this.$baseUrl+'/book/getBooksByDate';

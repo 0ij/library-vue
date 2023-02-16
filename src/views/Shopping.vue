@@ -141,13 +141,13 @@ export default {
         console.log(nowTime);
         for(i=0;i<this.multipleSelection.length;i++){
           this.orderItem.bid=this.multipleSelection[i].bid;
-          this.orderItem.orderTime=nowTime;
+          //this.orderItem.orderTime=nowTime;
           this.orderItem.uid=store.state.user.uid;
           this.orderItem.state=this.multipleSelection[i].state;
           this.orderItem.bnumber=this.multipleSelection[i].num;
           this.orderItem.totalPrice=this.multipleSelection[i].num*this.multipleSelection[i].price;
           this.$axios.post(url,{
-            orderTime:this.orderItem.orderTime,
+            //orderTime:this.orderItem.orderTime,
             state:this.orderItem.state,
             uid:this.orderItem.uid,
             bid:this.orderItem.bid,
