@@ -32,7 +32,7 @@
                     <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
                              bodyStyle="padding:10px" shadow="hover">
                       <div class="cover">
-                        <img :src="item.pic" alt="封面">
+                        <img :src="require('../assets/'+item.pic)" alt="封面">
                       </div>
                       <div class="info">
                         <div class="title" @click="toDetail(item)">
@@ -68,7 +68,7 @@
                     <el-card style="width: 135px;margin-bottom: 20px;height: 233px;float: left;margin-right: 15px" class="book"
                              bodyStyle="padding:10px" shadow="hover">
                       <div class="cover" >
-                        <img :src="item.pic" alt="封面">
+                        <img :src="require('../assets/'+item.pic)" alt="封面">
                       </div>
                       <div class="info">
                         <div class="title" @click="toDetail(item)">
@@ -120,7 +120,7 @@ export default {
           user:{},
             books: [
                 {
-                    pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+                    pic: '1.jpg',
                     ISBN:'12121',
                     title: '三体',
                     author: '刘慈欣',
@@ -128,7 +128,7 @@ export default {
                     abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
                 },
                 {
-                    pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+                    pic: '1.jpg',
                     ISBN:'12121',
                     title: '三体',
                     author: '刘慈欣',
@@ -136,7 +136,7 @@ export default {
                     abs: '文化大革命如火如荼进行的同时。军方探寻外星文明的绝秘计划“红岸工程”取得了突破性进展。但在按下发射键的那一刻，历经劫难的叶文洁没有意识到，她彻底改变了人类的命运。地球文明向宇宙发出的第一声啼鸣，以太阳为中心，以光速向宇宙深处飞驰……'
                 },
                 {
-                    cover: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+                    cover: '1.jpg',
                     ISBN:'12121',
                     title: '三体',
                     author: '刘慈欣',
@@ -146,7 +146,7 @@ export default {
             ],
           //存放销量好的书籍
           bookSaledGood:[{
-            pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
+            pic: '1.jpg',
             ISBN:'12121',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
@@ -156,7 +156,7 @@ export default {
           }],
           //存放新进书籍
           bookRecent: [{
-            pic: '../assets/1.png',
+            pic: '1.jpg',
             ISBN:'12121',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
