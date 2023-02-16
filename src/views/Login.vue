@@ -66,7 +66,7 @@ export default {
           password:this.loginForm.password
         }).then(res => {
           //console.log(res.uname);
-          let message = res.data.msg;
+          let message = res.data;
           // 判断结果
           if (message === "wrong") {
             /*打印错误信息*/

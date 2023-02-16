@@ -31,6 +31,7 @@
 
 <script>
 import MyNav from "../components/MyNav";
+import store from "../store";
 
 export default {
     name:'Contact',
@@ -79,6 +80,10 @@ export default {
         this.$router.push('/contact');
       },
       home(){
+        store.state.user.password='';
+        store.state.user.name='';
+        store.state.user.mail='';
+        store.state.user.uid='';
         this.$router.push('/');
       },
       orders(){

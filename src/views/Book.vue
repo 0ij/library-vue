@@ -161,7 +161,7 @@ export default {
         store.commit('setBook',item)
         this.$router.push({
             name:'bookhome.jsp',
-            query:{ISBN:item.ISBN}
+            query:{ISBN:item.isbn}
         })
       },
       search(){
@@ -186,6 +186,10 @@ export default {
         this.$router.push('/contact');
       },
       home(){
+        store.state.user.password='';
+        store.state.user.name='';
+        store.state.user.mail='';
+        store.state.user.uid='';
         this.$router.push('/');
       },
       orders(){

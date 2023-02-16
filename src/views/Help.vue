@@ -4,15 +4,17 @@
             <h1>帮助界面</h1>
         </el-header>
         <el-main>
-        <MyNav></MyNav>
-<!--            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
-<!--              <el-menu-item index="1" @click="search">搜索书本</el-menu-item>-->
-<!--              <el-menu-item index="2" @click="book">全部书籍</el-menu-item>-->
-<!--              <el-menu-item index="3" @click="shopping">购物车</el-menu-item>-->
-<!--              <el-menu-item index="4" @click="shopping">历史订单</el-menu-item>-->
-<!--              <el-menu-item index="5" @click="help">帮助</el-menu-item>-->
-<!--              <el-menu-item index="6" @click="home">退出登录</el-menu-item>-->
-<!--            </el-menu>-->
+<!--        <MyNav></MyNav>-->
+          <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+            <el-menu-item index="1" @click="search">搜索书本</el-menu-item>
+            <el-menu-item index="2" @click="book">全部书籍</el-menu-item>
+            <el-menu-item index="3" @click="shopping">购物车</el-menu-item>
+            <el-menu-item index="4" @click="orders">历史订单</el-menu-item>
+            <el-menu-item index="5" @click="help">帮助</el-menu-item>
+            <el-menu-item index="6" @click="register">创建新账号</el-menu-item>
+            <el-menu-item v-show="isShow" index="7" @click="login">登录</el-menu-item>
+            <el-menu-item v-show="isShow1" index="8" @click="home" >退出登录</el-menu-item>
+          </el-menu>
             <el-form>
               <el-form-item class="info-form">
                 <el-button plain @click="faq">FAQ</el-button>
@@ -26,6 +28,7 @@
 
 <script>
 import MyNav from "../components/MyNav";
+import store from "../store";
 export default {
     name:'Help',
   components:{
@@ -60,6 +63,10 @@ export default {
         this.$router.push('/help');
       },
       home(){
+        store.state.user.password='';
+        store.state.user.name='';
+        store.state.user.mail='';
+        store.state.user.uid='';
         this.$router.push('/');
       },
       orders(){
@@ -78,13 +85,13 @@ export default {
       },
 
     },mounted() {
-      if(store.state.user.uid===''){
-        this.isShow=true;
-        this.isShow1=false;
-      }else{
-        this.isShow=false;
-        this.isShow1=true;
-      }
+    if(store.state.user.uid===''){
+      this.isShow=true;
+      this.isShow1=false;
+    }else{
+      this.isShow=false;
+      this.isShow1=true;
+    }
   }
 }
 </script>

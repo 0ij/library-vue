@@ -24,7 +24,7 @@
           <div style="width: 600px;margin-left:100px;">
             <p>书名：{{book.bname}}</p>
             <p>作者：{{book.author}}</p>
-            <p>ISBN:{{book.ISBN}}</p>
+            <p>ISBN:{{book.isbn}}</p>
             <p style="text-align: left;">简介：{{book.info}}</p>
             <p>价格：{{book.price}}</p>
             <p><el-input-number v-model="num" :min="1" :max="10"></el-input-number></p>
@@ -56,7 +56,7 @@ export default {
           cartItem:{
             num:'',
             pic: 'https://i.loli.net/2019/04/10/5cada7e73d601.jpg',
-            ISBN:'12121',
+            isbn:'12121',
             bid:'',
             bname: 'store里被选中的三体',
             author: '刘慈欣',
@@ -89,7 +89,7 @@ export default {
         this.cartItem.author=this.book.author;
         this.cartItem.abs=this.book.abs;
         this.cartItem.price=this.book.price;
-        this.cartItem.ISBN=this.book.ISBN;
+        this.cartItem.isbn=this.book.isbn;
         this.cartItem.num=this.num;
         this.cartItem.bid=this.book.bid;
         store.commit('addIntoCart',this.cartItem);
@@ -117,6 +117,10 @@ export default {
         this.$router.push('/contact');
       },
       home(){
+        store.state.user.password='';
+        store.state.user.name='';
+        store.state.user.mail='';
+        store.state.user.uid='';
         this.$router.push('/');
       },
       orders(){

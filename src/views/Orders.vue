@@ -181,6 +181,10 @@ export default {
       this.$router.push('/contact');
     },
     home(){
+      store.state.user.password='';
+      store.state.user.name='';
+      store.state.user.mail='';
+      store.state.user.uid='';
       this.$router.push('/');
     },
     orders(){

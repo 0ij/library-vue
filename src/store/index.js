@@ -28,7 +28,7 @@ export default new Vuex.Store({
       bid:'',
       bname:'',
       author:'',
-      ISBN:'',
+      isbn:'',
       pic:'',
       price:'',
       putTime:'',
